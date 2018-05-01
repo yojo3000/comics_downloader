@@ -23,7 +23,8 @@ def getBs4Object(htmlObject):
 
 def getAllEpisodeURL():
 
-    URL             = 'http://www.manhuadb.com/manhua/476/484_5149.html'
+#    URL             = 'http://www.manhuadb.com/manhua/476/484_5149.html'
+    URL             = 'http://www.manhuadb.com/manhua/488/497_5414.html'
 
     htmlObject      = getHtmlObject(URL)
     bs4Object       = getBs4Object(htmlObject)
@@ -97,44 +98,35 @@ def downloadImage(URL, filename):
 
 def promptUX():
 
-    rangeOrNot = input("Select episode range or not? (y/n)")
+    rangeOrNot = input("Select episode range or not? (y/n) ")
 
     while(True):
 
         if rangeOrNot != 'y' and rangeOrNot != 'n':
-            rangeOrNot = input("Select episode range or not? (y/n)")
+            rangeOrNot = input("Select episode range or not? (y/n) ")
         else:
             break
 
     episodeRangeTop     = 0
 
     if rangeOrNot == 'y':
-        episodeRangeTop = input("Range from: (Episode 1 to " + str(allEpisodeNumber) + ")")
 
         while(True):
 
-            if episodeRangeTop.isnumeric() == True:
-                # index from 0 but not 1
-                episodeRangeTop = str(int(episodeRangeTop) - 1)
-                break
+            print ("(Episode 1 to " + str(allEpisodeNumber) + " )")
+            tempTop = input("Range from: ")
+            tempBottom = input("Range to: ")
 
-            else:
-                episodeRangeTop = input("Range from: (Episode 1 to " + str(allEpisodeNumber) + ")")
+            if tempTop.isnumeric() and tempBottom.isnumeric():
+                if int(tempTop) < allEpisodeNumber and int(tempBottom) < allEpisodeNumber:
+                    if int(tempTop) > 0 and int(tempBottom) > 0:
+                        if int(tempTop) < int(tempBottom):
+                            episodeRangeTop = tempTop
+                            episodeRangeBottom = tempBottom
+                            break
+            print ("Ilegal Input \n")
 
 
-        episodeRangeBottom = input("Range to: (Episode 1 to " + str(allEpisodeNumber) + ")")
-
-        while(True):
-
-            if episodeRangeBottom.isnumeric() == True:
-
-                if int(episodeRangeBottom) > int(episodeRangeTop):
-                    break
-                else:
-                    print ("Range Bottom should 'Bigger' than the top")
-                    episodeRangeBottom = input("Range from: (Episode 1 to " + str(allEpisodeNumber) + ")")
-            else:
-                episodeRangeBottom = input("Range from: (Episode 1 to " + str(allEpisodeNumber) + ")")
 
     else:
         episodeRangeTop         = 0
@@ -155,7 +147,7 @@ allEpisodeNumber    = getAllEpisodeNumber()
 
 def main():
 
-    comicName               = "island"
+    comicName               = "island_47"
 
     dataList                = promptUX()
     episodeRangeTop         = dataList[0]
